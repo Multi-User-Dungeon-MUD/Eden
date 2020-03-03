@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -66,22 +66,22 @@ const theme = createMuiTheme({
 export default function SignUp(props) {
   const classes = useStyles();
 
-  const [ account, setAccount ] = useState({
-    email: '',
-    username: '',
-    password1: '', 
-    password2: ''
-  })
+  const [account, setAccount] = useState({
+    email: "",
+    username: "",
+    password1: "",
+    password2: ""
+  });
 
   const handleChange = event => {
-    setAccount({ ...account, [event.target.name]: event.target.value })
-  }
-  const dispatch = useDispatch()
+    setAccount({ ...account, [event.target.name]: event.target.value });
+  };
+  const dispatch = useDispatch();
   // const signIn = useSelector(state => state.signInReducer)
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    dispatch(fetchRegistration(account, props.history))
-  }
+  const handleSubmit = event => {
+    event.preventDefault();
+    dispatch(fetchRegistration(account, props.history));
+  };
 
   return (
     <ThemeProvider theme={theme}>
