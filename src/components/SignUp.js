@@ -14,7 +14,7 @@ import Container from "@material-ui/core/Container";
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import tree from "../assets/tree.png";
-import { fetchLogin } from "../actions/signinAction";
+import { fetchRegistration } from "../actions/signinAction";
 
 function Copyright() {
   return (
@@ -69,7 +69,8 @@ export default function SignUp(props) {
   const [ account, setAccount ] = useState({
     email: '',
     username: '',
-    password: '' 
+    password1: '', 
+    password2: ''
   })
 
   const handleChange = event => {
@@ -79,7 +80,7 @@ export default function SignUp(props) {
   // const signIn = useSelector(state => state.signInReducer)
   const handleSubmit = (event) => {
     event.preventDefault()
-    dispatch(fetchLogin(account, props.history))
+    dispatch(fetchRegistration(account, props.history))
   }
 
   return (
@@ -92,7 +93,7 @@ export default function SignUp(props) {
           <img src={tree} alt="tree" />
           {/* </Avatar> */}
           <Typography component="h1" variant="h5">
-            Sign In
+            Sign up
           </Typography>
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
@@ -126,10 +127,23 @@ export default function SignUp(props) {
                   variant="outlined"
                   required
                   fullWidth
-                  name="password"
-                  label="Password"
+                  name="password1"
+                  label="Password1"
                   type="password"
-                  id="password"
+                  id="password1"
+                  autoComplete="current-password"
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password2"
+                  label="Password2"
+                  type="password"
+                  id="password2"
                   autoComplete="current-password"
                   onChange={handleChange}
                 />
@@ -143,12 +157,12 @@ export default function SignUp(props) {
               className={classes.submit}
               onClick={handleSubmit}
             >
-              Sign In
+              Sign Up
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link to="/signup" variant="body2">
-                  Don't have an account? Sign up
+                <Link to="/" variant="body2">
+                  Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
