@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,8 +13,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
-import tree from "../assets/tree.png";
-import { fetchLogin } from "../actions/signinAction";
+import tree from "../../assets/tree.png";
+import { fetchLogin } from "../../actions/signinAction";
+import signInReducer from "../../reducers/signInReducer";
+import "../SignIn/Signin.scss";
 
 function Copyright() {
   return (
@@ -66,21 +68,21 @@ const theme = createMuiTheme({
 export default function SignUp(props) {
   const classes = useStyles();
 
-  const [ account, setAccount ] = useState({
-    email: '',
-    username: '',
-    password: '' 
-  })
+  const [account, setAccount] = useState({
+    email: "",
+    username: "",
+    password: ""
+  });
 
   const handleChange = event => {
-    setAccount({ ...account, [event.target.name]: event.target.value })
-  }
-  const dispatch = useDispatch()
+    setAccount({ ...account, [event.target.name]: event.target.value });
+  };
+  const dispatch = useDispatch();
   // const signIn = useSelector(state => state.signInReducer)
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    dispatch(fetchLogin(account, props.history))
-  }
+  const handleSubmit = event => {
+    event.preventDefault();
+    dispatch(fetchLogin(account, props.history));
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -147,7 +149,7 @@ export default function SignUp(props) {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link to="/signup" variant="body2">
+                <Link to="/signup" variant="body2" className="singInLink">
                   Don't have an account? Sign up
                 </Link>
               </Grid>
