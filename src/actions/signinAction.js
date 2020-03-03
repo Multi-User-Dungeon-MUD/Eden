@@ -6,6 +6,7 @@ export const LOGIN_FAILURE = "LOGIN_FAILURE";
 
 export const fetchLogin = (account, history) => dispatch => {
   dispatch({ type: LOGIN_FETCH });
+
   axios
     .post(`d/api/adv/login`, account)
     .then(res => {
