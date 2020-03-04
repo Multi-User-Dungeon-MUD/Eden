@@ -34,15 +34,36 @@ function DungeonMap() {
   if (mapData) {
     console.log(mapData);
     let sortedArr = mapData.data.map(item => {
-      return [item.x, item.y, item.id];
+      return [item.x, item.y, item.id, item.n_to, item.s_to, item.e_to, item.w_to];
     });
     // sort rooms by id #  <_>
     sortedArr.sort((x, y) => x[2] - y[2]);
+    console.log('sorted array', sortedArr);
     for (let i = 0; i < sortedArr.length; i++) {
-      cordArr.push({
-        x: sortedArr[i][0],
-        y: sortedArr[i][1]
-      });
+      let counter = 0;
+      for (let j = 3; j < sortedArr[i].length; j++) {
+        if (sortedArr[i][j] > 0) {
+          counter += 1;
+        }
+      }
+      if (counter > 1 || i === 0) {
+        cordArr.push({
+          x: sortedArr[i][0],
+          y: sortedArr[i][1]
+        })
+      } else {
+        cordArr.push({
+          x: sortedArr[i][0],
+          y: sortedArr[i][1]
+        });
+        
+        cordArr.push({
+          x: sortedArr[i-1][0],
+          y: sortedArr[i-1][1]
+        });
+      
+      }
+      
     }
   }
   console.log(cordArr, "this is the cord");
