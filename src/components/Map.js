@@ -8,9 +8,14 @@ import {
 import axios from "axios";
 import "./Dungeon.scss";
 import axiosWithAuth from "../axiosWithAuth/axiosWithAuth";
+import up from "../assets/chevron.png";
+import down from "../assets/down-arrow.png";
+import right from "../assets/right.png";
+import left from "../assets/left.png";
 
 function DungeonMap() {
   //////////map data object////////
+  const [isClicked, setIsClicked] = useState(true);
   const moveEndPoint = `${process.env.REACT_APP_EDEN_HEROKU_API}adv/move/`;
   const [mapData, setMapData] = useState();
   const [playerCordData, setPlayerCordData] = useState([]);
@@ -30,18 +35,6 @@ function DungeonMap() {
       })
       .catch(err => console.log(err));
   }, []);
-  //////////player moves//////////////
-  //   const [player, setPlayer] = useState();
-  //   const moveEndPoint = `${process.env.REACT_APP_EDEN_HEROKU_API}adv/move/`;
-  //   useEffect(() => {
-  //     axiosWithAuth()
-  //       .post(moveEndPoint)
-  //       .then(res => {
-  //         console.log(res, "this is the player moves");
-  //         setPlayer(res.data);
-  //       })
-  //       .catch(err => console.log(err));
-  //   }, []);
 
   if (!mapData || playerCordData.length === 0) {
     return <div>loading...</div>;
@@ -88,7 +81,6 @@ function DungeonMap() {
   }
 
   document.onkeydown = checkKey;
-
   function checkKey(e) {
     e = e || window.event;
 
@@ -142,10 +134,35 @@ function DungeonMap() {
         .catch(err => console.log(err));
     }
   }
-  console.log(playerCordData)
+  const controls = (e, direction) => {
+    e.preventDefault();
+    axiosWithAuth()
+      .post(moveEndPoint, { direction })
+      .then(res => {
+        setPlayerCordData([{ x: res.data.x, y: res.data.y }]);
+      })
+      .catch(err => console.log(err));
+  };
+
+  console.log(playerCordData);
   return (
     <>
       <div className="mapContainer">
+        <div className="btnControls">
+          <p onClick={e => controls(e, "n")}>
+            <img src={up} alt="up arrow" />
+          </p>
+          <p onClick={e => controls(e, "s")}>
+            <img src={down} alt="up arrow" />
+          </p>
+          <p onClick={e => controls(e, "e")}>
+            <img src={right} alt="up arrow" />
+          </p>
+          <p onClick={e => controls(e, "w")}>
+            <img src={left} alt="up arrow" />
+          </p>
+        </div>
+
         <FlexibleXYPlot width={900} height={900}>
           <LineMarkSeries
             strokeWidth="2"
@@ -153,7 +170,7 @@ function DungeonMap() {
             stroke="#fff"
             data={cordArr}
 
-          //   key={Math.random() * 100}
+            //   key={Math.random() * 100}
           />
           <MarkSeries
             strokeWidth={5}
