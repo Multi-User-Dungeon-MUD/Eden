@@ -16,6 +16,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import tree from "../assets/tree.png";
 import { fetchRegistration } from "../actions/signinAction";
 import "../components/SignIn/Signin.scss";
+import Particles from "react-particles-js";
 
 function Copyright() {
   return (
@@ -84,8 +85,37 @@ export default function SignUp(props) {
     dispatch(fetchRegistration(account, props.history));
   };
 
+  const particleOpt = {
+    particles: {
+      number: {
+        value: 160,
+        density: {
+          enable: false
+        }
+      },
+      size: {
+        value: 3,
+        random: true,
+        anim: {
+          speed: 4,
+          size_min: 0.3
+        }
+      },
+      line_linked: {
+        enable: false
+      },
+      move: {
+        random: true,
+        speed: 1,
+        direction: "top",
+        out_mode: "out"
+      }
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
+      <Particles params={particleOpt} />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>

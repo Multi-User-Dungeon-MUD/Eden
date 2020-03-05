@@ -17,6 +17,7 @@ import tree from "../../assets/tree.png";
 import { fetchLogin } from "../../actions/signinAction";
 import signInReducer from "../../reducers/signInReducer";
 import "../SignIn/Signin.scss";
+import Particles from "react-particles-js";
 
 function Copyright() {
   return (
@@ -83,80 +84,112 @@ export default function SignUp(props) {
     event.preventDefault();
     dispatch(fetchLogin(account, props.history));
   };
+  const particleOpt = {
+    particles: {
+      number: {
+        value: 160,
+        density: {
+          enable: false
+        }
+      },
+      size: {
+        value: 3,
+        random: true,
+        anim: {
+          speed: 4,
+          size_min: 0.3
+        }
+      },
+      line_linked: {
+        enable: false
+      },
+      move: {
+        random: true,
+        speed: 1,
+        direction: "top",
+        out_mode: "out"
+      }
+    }
+  };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          {/* <Avatar className={classes.avatar}> */}
-          {/* <LockOutlinedIcon /> */}
-          <img src={tree} alt="tree" />
-          {/* </Avatar> */}
-          <Typography component="h1" variant="h5">
-            Sign In
-          </Typography>
-          <form className={classes.form} noValidate>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  autoComplete="username"
-                  name="username"
-                  variant="outlined"
-                  required
+    <>
+      <div className="signInContainer">
+        <ThemeProvider theme={theme}>
+          <Particles params={particleOpt} />
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <div className={classes.paper}>
+              {/* <Avatar className={classes.avatar}> */}
+              {/* <LockOutlinedIcon /> */}
+              <img src={tree} alt="tree" />
+              {/* </Avatar> */}
+              <Typography component="h1" variant="h5">
+                Sign In
+              </Typography>
+              <form className={classes.form} noValidate>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      autoComplete="username"
+                      name="username"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="username"
+                      label="Username"
+                      autoFocus
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password"
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                </Grid>
+                <Button
+                  type="submit"
                   fullWidth
-                  id="username"
-                  label="Username"
-                  autoFocus
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  onChange={handleChange}
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={handleSubmit}
-            >
-              Sign In
-            </Button>
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Link to="/signup" variant="body2" className="singInLink">
-                  Don't have an account? Sign up
-                </Link>
-              </Grid>
-            </Grid>
-          </form>
-        </div>
-      </Container>
-    </ThemeProvider>
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={handleSubmit}
+                >
+                  Sign In
+                </Button>
+                <Grid container justify="flex-end">
+                  <Grid item>
+                    <Link to="/signup" variant="body2" className="singInLink">
+                      Don't have an account? Sign up
+                    </Link>
+                  </Grid>
+                </Grid>
+              </form>
+            </div>
+          </Container>
+        </ThemeProvider>
+      </div>
+    </>
   );
 }

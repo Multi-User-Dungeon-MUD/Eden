@@ -148,21 +148,6 @@ function DungeonMap() {
   return (
     <>
       <div className="mapContainer">
-        <div className="btnControls">
-          <p onClick={e => controls(e, "n")}>
-            <img src={up} alt="up arrow" />
-          </p>
-          <p onClick={e => controls(e, "s")}>
-            <img src={down} alt="up arrow" />
-          </p>
-          <p onClick={e => controls(e, "e")}>
-            <img src={right} alt="up arrow" />
-          </p>
-          <p onClick={e => controls(e, "w")}>
-            <img src={left} alt="up arrow" />
-          </p>
-        </div>
-
         <FlexibleXYPlot width={900} height={900}>
           <LineMarkSeries
             strokeWidth="2"
@@ -182,6 +167,26 @@ function DungeonMap() {
             style={{ cursor: "pointer" }}
           />
         </FlexibleXYPlot>
+        <div className="controlContainer">
+          <div className="controlTop">
+            <p onClick={e => controls(e, "n")}>
+              <img src={up} alt="up arrow" />
+            </p>
+          </div>
+          <div className="controlMid">
+            <p onClick={e => controls(e, "w")}>
+              <img src={left} alt="up arrow" />
+            </p>
+            <p onClick={e => controls(e, "e")}>
+              <img src={right} alt="up arrow" />
+            </p>
+          </div>
+          <div className="controlBottom">
+            <p onClick={e => controls(e, "s")}>
+              <img src={down} alt="up arrow" />
+            </p>
+          </div>
+        </div>
       </div>
     </>
   );

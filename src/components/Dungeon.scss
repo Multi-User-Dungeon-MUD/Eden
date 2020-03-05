@@ -4,4 +4,20 @@
   align-items: center;
   background: #2e2e2e;
   height: 100vh;
+
+  .controlContainer {
+    width: 300px;
+    height: 300px;
+    border: 2px solid #fff;
+    margin-right: 400px;
+
+    .controlTop {
+      display: flex;
+      justify-content: center;
+    }
+    .controlMid {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
 }
