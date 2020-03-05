@@ -13,9 +13,9 @@ function DungeonMap() {
   //////////map data object////////
   const moveEndPoint = `${process.env.REACT_APP_EDEN_HEROKU_API}adv/move/`;
   const [mapData, setMapData] = useState();
-  const [playerCordData, setPlayerCordData] = useState();
+  const [playerCordData, setPlayerCordData] = useState([]);
   const endpoint = `${process.env.REACT_APP_EDEN_HEROKU_API}adv/mapdata/`;
-  const inti = `${process.env.REACT_APP_EDEN_HEROKU_API}adv/init/`;
+  const init = `${process.env.REACT_APP_EDEN_HEROKU_API}adv/init/`;
   useEffect(() => {
     axiosWithAuth()
       .get(endpoint)
@@ -24,11 +24,9 @@ function DungeonMap() {
       })
       .catch(err => console.log(err));
     axiosWithAuth()
-      .get(inti)
+      .get(init)
       .then(res => {
-        console.log(res.data, "this is the cordssss");
-        setPlayerCordData(res.data.x);
-        console.log(playerCordData, "new cord ");
+        setPlayerCordData([{ x: res.data.x, y: res.data.y }]);
       })
       .catch(err => console.log(err));
   }, []);
@@ -45,7 +43,7 @@ function DungeonMap() {
   //       .catch(err => console.log(err));
   //   }, []);
 
-  if (!mapData && !playerCordData) {
+  if (!mapData || playerCordData.length === 0) {
     return <div>loading...</div>;
   }
   let cordArr = [];
@@ -89,32 +87,62 @@ function DungeonMap() {
     }
   }
 
-  //   document.onkeydown = checkKey;
+  document.onkeydown = checkKey;
 
-  //   function checkKey(e) {
-  //     e = e || window.event;
+  function checkKey(e) {
+    e = e || window.event;
 
-  //     if (e.keyCode == "38") {
-  //       // up arrow
-  //       let north = {
-  //         direction: "n"
-  //       };
-  //       axiosWithAuth()
-  //         .post(moveEndPoint, north)
-  //         .then(res => {
-  //           console.log(res, "this is the player moves");
-  //           setPlayerCordData({ x: res.data.x, y: res.data.y });
-  //         })
-  //         .catch(err => console.log(err));
-  //     } else if (e.keyCode == "40") {
-  //       // down arrow
-  //     } else if (e.keyCode == "37") {
-  //       // left arrow
-  //     } else if (e.keyCode == "39") {
-  //       // right arrow
-  //     }
-  //   }
-  console.log(playerCordData);
+    if (e.keyCode == "38") {
+      // up arrow
+      let north = {
+        direction: "n"
+      };
+      axiosWithAuth()
+        .post(moveEndPoint, north)
+        .then(res => {
+          console.log(res, "this is the player moves");
+          setPlayerCordData([{ x: res.data.x, y: res.data.y }]);
+        })
+        .catch(err => console.log(err));
+    } else if (e.keyCode == "40") {
+      // down arrow
+      let south = {
+        direction: "s"
+      };
+      axiosWithAuth()
+        .post(moveEndPoint, south)
+        .then(res => {
+          console.log(res, "this is the player moves");
+          setPlayerCordData([{ x: res.data.x, y: res.data.y }]);
+        })
+        .catch(err => console.log(err));
+    } else if (e.keyCode == "37") {
+      // left arrow
+      let west = {
+        direction: "w"
+      };
+      axiosWithAuth()
+        .post(moveEndPoint, west)
+        .then(res => {
+          console.log(res, "this is the player moves");
+          setPlayerCordData([{ x: res.data.x, y: res.data.y }]);
+        })
+        .catch(err => console.log(err));
+    } else if (e.keyCode == "39") {
+      // right arrow
+      let east = {
+        direction: "e"
+      };
+      axiosWithAuth()
+        .post(moveEndPoint, east)
+        .then(res => {
+          console.log(res, "this is the player moves");
+          setPlayerCordData([{ x: res.data.x, y: res.data.y }]);
+        })
+        .catch(err => console.log(err));
+    }
+  }
+  console.log(playerCordData)
   return (
     <>
       <div className="mapContainer">
@@ -125,22 +153,17 @@ function DungeonMap() {
             stroke="#fff"
             data={cordArr}
 
-            //   key={Math.random() * 100}
+          //   key={Math.random() * 100}
           />
-          {/* ))} */}
-          {playerCordData ? (
-            <MarkSeries
-              strokeWidth={5}
-              opacity="1"
-              size="4"
-              color="Red"
-              fill="#fff"
-              //   data={[playerCordData]}
-              style={{ cursor: "pointer" }}
-            />
-          ) : (
-            ""
-          )}
+          <MarkSeries
+            strokeWidth={5}
+            opacity="1"
+            size="4"
+            color="Red"
+            fill="#fff"
+            data={playerCordData}
+            style={{ cursor: "pointer" }}
+          />
         </FlexibleXYPlot>
       </div>
     </>
