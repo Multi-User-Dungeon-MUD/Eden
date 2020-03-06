@@ -2,13 +2,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #2e2e2e;
+  background: #000;
   height: 100vh;
 
+  .gameInner {
+    border: 10px solid #6f987c;
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    margin-left: 20%;
+  }
+
   .controlContainer {
-    width: 300px;
+    width: 200px;
     height: 300px;
-    border: 2px solid #fff;
+    border: 2px solid #6f987c;
     margin-right: 400px;
 
     .controlTop {

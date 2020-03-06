@@ -15,10 +15,11 @@ import left from "../assets/left.png";
 
 function DungeonMap() {
   //////////map data object////////
-  const [isClicked, setIsClicked] = useState(true);
-  const moveEndPoint = `${process.env.REACT_APP_EDEN_HEROKU_API}adv/move/`;
   const [mapData, setMapData] = useState();
   const [playerCordData, setPlayerCordData] = useState([]);
+  const [isError, setIsError] = useState(false);
+  const [gameData, setGameData] = useState([]);
+  const moveEndPoint = `${process.env.REACT_APP_EDEN_HEROKU_API}adv/move/`;
   const endpoint = `${process.env.REACT_APP_EDEN_HEROKU_API}adv/mapdata/`;
   const init = `${process.env.REACT_APP_EDEN_HEROKU_API}adv/init/`;
   useEffect(() => {
@@ -35,6 +36,18 @@ function DungeonMap() {
       })
       .catch(err => console.log(err));
   }, []);
+  // game data
+  useEffect(() => {
+    axiosWithAuth()
+      .get(init)
+      .then(res => {
+        setGameData(res.data);
+        console.log(res);
+      })
+      .catch(err => console.log(err));
+  }, []);
+
+  console.log(gameData.title);
 
   if (!mapData || playerCordData.length === 0) {
     return <div>loading...</div>;
@@ -49,7 +62,8 @@ function DungeonMap() {
         item.n_to,
         item.s_to,
         item.e_to,
-        item.w_to
+        item.w_to,
+        item.title
       ];
     });
     // sort rooms by id #  <_>
@@ -144,29 +158,29 @@ function DungeonMap() {
       .catch(err => console.log(err));
   };
 
-  console.log(playerCordData);
+  console.log(cordArr);
   return (
     <>
       <div className="mapContainer">
-        <FlexibleXYPlot width={900} height={900}>
-          <LineMarkSeries
-            strokeWidth="2"
-            fill="#fff"
-            stroke="#fff"
-            data={cordArr}
-
-            //   key={Math.random() * 100}
-          />
-          <MarkSeries
-            strokeWidth={5}
-            opacity="1"
-            size="4"
-            color="Red"
-            fill="#fff"
-            data={playerCordData}
-            style={{ cursor: "pointer" }}
-          />
-        </FlexibleXYPlot>
+        <div className="gameInner">
+          <FlexibleXYPlot width={900} height={800}>
+            <LineMarkSeries
+              strokeWidth="2"
+              fill="#c3c3c3"
+              stroke="#c3c3c3"
+              data={cordArr}
+            />
+            <MarkSeries
+              strokeWidth={5}
+              opacity="1"
+              size="4"
+              color="red"
+              // fill="#fff"
+              data={playerCordData}
+              style={{ cursor: "pointer" }}
+            />
+          </FlexibleXYPlot>
+        </div>
         <div className="controlContainer">
           <div className="controlTop">
             <p onClick={e => controls(e, "n")}>
@@ -187,6 +201,7 @@ function DungeonMap() {
             </p>
           </div>
         </div>
+        <div className="messageContainer"></div>
       </div>
     </>
   );
